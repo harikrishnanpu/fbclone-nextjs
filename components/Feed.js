@@ -3,13 +3,13 @@ import Posts from "./Posts"
 import Stories from "./Stories"
 
 
-function Feed() {
+function Feed({posts}) {
     return (
-        <div className="pb-44 pt-6 mr-4 xl:mr-40">
+        <div className="flex-grow h-screen pb-44 pt-6 mr-4 xl:mr-40 overflow-y-auto scrollbar-hide">
             <div className="mx-auto max-w-md md:mx-w-lg lg:max-w-2xl">
                 <Stories />
                 <InputBox />
-                <Posts />
+                <Posts posts={posts} />
             </div>
         </div>
     )

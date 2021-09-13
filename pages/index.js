@@ -4,8 +4,10 @@ import Feed from '../components/Feed';
 import Header from '../components/Header'
 import Login from '../components/Login';
 import Sidebar from '../components/Sidebar';
+import Widgets from '../components/Widgets';
+import { db } from '../firebase';
 
-export default function Home({ session }) {
+export default function Home({ session , posts }) {
   
  if (!session) return <Login />; 
 
@@ -15,11 +17,11 @@ export default function Home({ session }) {
         <title>Facebook Clone</title>
       </Head>
 
-      <Header />
-      <main className="flex">
+      <Header className="sticky" />
+      <main className="flex relative">
         <Sidebar />
-        <Feed />
-        {/* Widgets */}
+        <Feed posts={posts} />
+        <Widgets />
       </main>
 
       
@@ -28,11 +30,20 @@ export default function Home({ session }) {
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context)
+  const session = await getSession(context);
+
+  const posts = await db.collection('posts').orderBy('timestamo','desc').get();
+
+  const docs = posts.docs.map((post)=>({
+    id: post.id,
+    ...post.data(),
+    timestamp: null,
+  }))
 
   return {
     props: {
-      session
+      session,
+      posts: docs
     }
   }
 }

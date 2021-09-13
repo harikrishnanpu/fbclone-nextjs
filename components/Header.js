@@ -23,7 +23,7 @@ function Header() {
     const [session] = useSession();
 
     return (
-        <div className="sticky top-0 bg-white flex items-center p-2 lg:px-5 shadow-md">
+        <div className="sticky top-0 bg-white flex items-center p-2 lg:px-5 shadow-md z-50">
 
             {/* Left */}
             <div className="flex ml-2 items-center">
@@ -53,7 +53,7 @@ function Header() {
 
             {/* Right */}
 
-            <div className="flex items-center sm:space-x-2 justify-end">
+            <div className="flex items-center sm:space-x-2  justify-end">
                 <Image
                  src={session.user.image}
                  className="rounded-full cursor-pointer"
